@@ -1,6 +1,7 @@
 <script>
 import {mapActions} from 'pinia'
 import { useCounterStore } from '../stores/counter'
+import FormData from 'form-data'
 export default {
     data(){
         return {
@@ -14,7 +15,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useCounterStore,['addProducts']),
+        ...mapActions(useCounterStore,['addProducts','uploadFile']),
         async addHandler(){
             const data = {
                 name: this.name,
@@ -28,7 +29,7 @@ export default {
         addFiles(){
             this.$refs.files.click();
         },
-        submitFiles(){
+        async submitFiles(){
         /*
           Initialize the form data
         */
@@ -39,26 +40,10 @@ export default {
         */
         for( var i = 0; i < this.files.length; i++ ){
           let file = this.files[i];
-          formData.append('files[' + i + ']', file);
+          formData.append('files', file);
         }
         console.log(formData)
-        
-        /*
-          Make the request to the POST /select-files URL
-        */
-        // axios.post( '/select-files',
-        //   formData,
-        //   {
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data'
-        //     }
-        //   }
-        // ).then(function(){
-        //   console.log('SUCCESS!!');
-        // })
-        // .catch(function(){
-        //   console.log('FAILURE!!');
-        // });
+        await this.uploadFile(formData)
       },
       handleFilesUpload(){
         let uploadedFiles = this.$refs.files.files;

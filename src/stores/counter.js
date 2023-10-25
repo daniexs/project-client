@@ -108,14 +108,15 @@ export const useCounterStore = defineStore('counter', {
         console.log(error)
       }
     },
-    async uploadFile(value){
+    async uploadFile(formData){
       try {
         const {data} = await axios({
-          url: this.baseURL + '/upload/single',
+          url: this.baseURL + '/upload/upload-multiple',
           method: 'post',
-          data: {file: value}
+          data: formData,
+          headers: {'Content-Type': 'multipart/from-data'}
         })
-        this.imgUrl = data.location
+        this.imgUrl = data[0].location
         console.log(this.imgUrl)
       } catch (error) {
         console.log(error)
