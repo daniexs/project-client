@@ -16,7 +16,7 @@ export default {
 }
 </script>
 <template>
-    <div  class="rounded position-relative fruite-item">
+    <RouterLink :to="'/detail/' + data.id" class="rounded position-relative fruite-item">
         <div class="fruite-img" >
             <img :src="data.imgUrl" class="img-fluid w-100 rounded-top" alt="">
         </div>
@@ -26,8 +26,7 @@ export default {
             <p>{{ data.description }}</p>
             <div class="d-flex justify-content-between flex-lg-wrap">
                 <p class="text-dark fs-5 fw-bold mb-0"> {{ convertCur(data.price) }}</p>
-                <a href="#" v-on:click.prevent="addCart(data.id)" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
             </div>
         </div>
-    </div>
+    </RouterLink>
 </template>
