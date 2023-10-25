@@ -8,7 +8,7 @@ export default {
 </script>
 
 <template>
-  <Navbar/>
+  <Navbar v-if="$route.path != '/login' && $route.path != '/register'"/>
   <RouterView />
-  <Footer/>
+  <Footer v-if="$route.path != '/login' && $route.path != '/register'" />
 </template>

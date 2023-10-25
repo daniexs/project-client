@@ -3,6 +3,8 @@ import HomePage from '../views/HomePage.vue'
 import ShopPage from '../views/ShopPage.vue'
 import DetailPage from '../views/DetailPage.vue'
 import CartPage from '../views/CartPage.vue'
+import LoginPage from '../views/LoginPage.vue'
+import RegisterPage from '../views/RegisterPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,11 +24,20 @@ const router = createRouter({
       name: 'detail',
       component: DetailPage
     },
-    
     {
       path: '/cart',
       name: 'cart',
       component: CartPage
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterPage
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginPage
     }
   ]
 })
