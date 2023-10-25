@@ -47,13 +47,15 @@ export const useCounterStore = defineStore('counter', {
     },
     async addProducts(value){
       try {
+        value.imgUrl = this.imgUrl
         const {data} = await axios({
-          url: this.baseURL + '/products/',
+          url: this.baseURL + '/products/add',
           method: 'post',
           data: value,
           headers: {access_token: localStorage.getItem('access_token')}
         })
-        console.log(data)
+        this.$router.push('/shop')
+        this.imgUrl = ''
       } catch (error) {
         console.log(error)
       }
