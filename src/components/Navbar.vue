@@ -9,14 +9,14 @@ export default {
         }
     },
     methods: {
-        
+        ...mapActions(useCounterStore,['getCart'])
     },
     computed:{
         ...mapState(useCounterStore,['dataCart'])
     },
     created(){
         if(localStorage.access_token){
-            this.count = this.dataCart.length
+            this.getCart()
         }
     }
 }
@@ -64,7 +64,7 @@ export default {
                         <div class="d-flex m-3 me-0">
                             <RouterLink to="/cart" class="position-relative me-4 my-auto">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">{{ count }}</span>
+                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">{{ this.dataCart.length }}</span>
                             </RouterLink>
                             <div class="nav-item dropdown" style="margin-right: 1rem;">
                                 <a href="#" class="my-auto">

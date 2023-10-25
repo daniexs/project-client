@@ -5,7 +5,7 @@ import { useCounterStore } from '../stores/counter';
 export default {
     props: ['data'],
     methods: {
-        ...mapActions(useCounterStore,['productsDetail',''])
+        ...mapActions(useCounterStore,['productsDetail','addCart'])
     },
     computed: {
         ...mapState(useCounterStore,['dataProductsDetail'])
@@ -87,7 +87,7 @@ export default {
                                         </button>
                                     </div>
                                 </div>
-                                <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                <a href="#" v-on:click.prevent="addCart(dataProductsDetail.id)" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                             </div>
                             <div class="col-lg-12">
                                 <nav>

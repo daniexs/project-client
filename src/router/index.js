@@ -6,6 +6,7 @@ import CartPage from '../views/CartPage.vue'
 import LoginPage from '../views/LoginPage.vue'
 import RegisterPage from '../views/RegisterPage.vue'
 import FormPage from '../views/FormPage.vue'
+import CheckoutPage from '../views/CheckoutPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,11 @@ const router = createRouter({
       path: '/add',
       name: 'add',
       component: FormPage
+    },
+    {
+      path: '/checkout',
+      name: 'checkout',
+      component: CheckoutPage
     },
     
   ]

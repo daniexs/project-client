@@ -89,19 +89,21 @@ export const useCounterStore = defineStore('counter', {
           method: 'get',
           headers: {access_token: localStorage.getItem('access_token')}
         })
+        this.dataCart = data
       } catch (error) {
         console.log(error)
       }
     },
-    async addCart(value){
+    async addCart(id){
       try {
         const {data} = await axios({
           url: this.baseURL + '/cart/add',
           method: 'post',
-          data: value,
+          data: {ProductId: id},
           headers: {access_token: localStorage.getItem('access_token')}
         })
-        this.dataCart = data
+        console.log(data)
+        //this.dataCart = data
       } catch (error) {
         console.log(error)
       }
@@ -115,6 +117,17 @@ export const useCounterStore = defineStore('counter', {
         })
         this.imgUrl = data.location
         console.log(this.imgUrl)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async payment(){
+      try {
+        const {data} = await axios({
+          url: this.baseURL + '/midtrans/',
+          method: 'post',
+        })
+        return data.token
       } catch (error) {
         console.log(error)
       }
