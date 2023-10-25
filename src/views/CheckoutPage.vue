@@ -13,16 +13,33 @@ export default {
             })
         },
         async handlerpayment(){
-            const data = await this.payment()
+            const data = await this.payment(this.total)
             console.log(data)
             this.paymentPop(data)
+        },
+        convertCur(value){
+            return new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR"
+            }).format(value)
         }
     },
-    created(){
-        this.getCart()
+    async created(){
+        await this.getCart()
+        await this.dataCart.map(el=>{
+            this.tottalPrice += el.Product.price
+        })
+        this.total += this.tottalPrice
+
     },
     computed: {
         ...mapState(useCounterStore,['dataCart'])
+    },
+    data(){
+        return {
+            tottalPrice: 0,
+            total: 9000
+        }
     }
 }
 </script>
@@ -69,57 +86,38 @@ export default {
                             <div class="row">
                                 <div class="col-md-12 col-lg-6">
                                     <div class="form-item w-100">
-                                        <label class="form-label my-3">First Name<sup>*</sup></label>
-                                        <input type="text" class="form-control">
+                                        <label class="form-label my-2">First Name<sup>*</sup></label>
+                                        <input type="text" class="form-control mb-2">
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-lg-6">
                                     <div class="form-item w-100">
-                                        <label class="form-label my-3">Last Name<sup>*</sup></label>
-                                        <input type="text" class="form-control">
+                                        <label class="form-label my-2">Last Name<sup>*</sup></label>
+                                        <input type="text" class="form-control mb-2">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Company Name<sup>*</sup></label>
-                                <input type="text" class="form-control">
+                                <label class="form-label my-2">Address <sup>*</sup></label>
+                                <input type="text" class="form-control mb-2" placeholder="House Number Street Name">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Address <sup>*</sup></label>
-                                <input type="text" class="form-control" placeholder="House Number Street Name">
+                                <label class="form-label my-2">Country<sup>*</sup></label>
+                                <input type="text" class="form-control mb-2">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Town/City<sup>*</sup></label>
-                                <input type="text" class="form-control">
+                                <label class="form-label my-2">Postcode/Zip<sup>*</sup></label>
+                                <input type="text" class="form-control mb-2">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Country<sup>*</sup></label>
-                                <input type="text" class="form-control">
+                                <label class="form-label my-2">Mobile<sup>*</sup></label>
+                                <input type="tel" class="form-control mb-2">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Postcode/Zip<sup>*</sup></label>
-                                <input type="text" class="form-control">
+                                <label class="form-label my-2">Email Address<sup>*</sup></label>
+                                <input type="email" class="form-control mb-2">
                             </div>
-                            <div class="form-item">
-                                <label class="form-label my-3">Mobile<sup>*</sup></label>
-                                <input type="tel" class="form-control">
-                            </div>
-                            <div class="form-item">
-                                <label class="form-label my-3">Email Address<sup>*</sup></label>
-                                <input type="email" class="form-control">
-                            </div>
-                            <div class="form-check my-3">
-                                <input type="checkbox" class="form-check-input" id="Account-1" name="Accounts" value="Accounts">
-                                <label class="form-check-label" for="Account-1">Create an account?</label>
-                            </div>
-                            <hr>
-                            <div class="form-check my-3">
-                                <input class="form-check-input" type="checkbox" id="Address-1" name="Address" value="Address">
-                                <label class="form-check-label" for="Address-1">Ship to a different address?</label>
-                            </div>
-                            <div class="form-item">
-                                <textarea name="text" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Oreder Notes (Optional)"></textarea>
-                            </div>
+                            
                         </div>
                         <div class="col-md-12 col-lg-6 col-xl-5">
                             <div class="table-responsive">
@@ -129,8 +127,6 @@ export default {
                                             <th scope="col">Products</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Price</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -141,29 +137,24 @@ export default {
                                                 </div>
                                             </th>
                                             <td class="py-5">{{ el.Product.name }}</td>
-                                            <td class="py-5">$ {{ el.Product.price }}</td>
-                                            <td class="py-5">2</td>
-                                            <td class="py-5">$138.00</td>
+                                            <td class="py-5">{{ convertCur(el.Product.price) }}</td>
+                                            
                                         </tr>
-                                        
                                         
                                         <tr>
                                             <th scope="row">
                                             </th>
-                                            <td class="py-5"></td>
-                                            <td class="py-5"></td>
+                                            
                                             <td class="py-5">
                                                 <p class="mb-0 text-dark py-3">Subtotal</p>
                                             </td>
                                             <td class="py-5">
                                                 <div class="py-3 border-bottom border-top">
-                                                    <p class="mb-0 text-dark">$414.00</p>
+                                                    <p class="mb-0 text-dark">{{ convertCur(tottalPrice) }}</p>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">
-                                            </th>
                                             <td class="py-5">
                                                 <p class="mb-0 text-dark py-4">Shipping</p>
                                             </td>
@@ -174,11 +165,11 @@ export default {
                                                 </div>
                                                 <div class="form-check text-start">
                                                     <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-2" name="Shipping-1" value="Shipping">
-                                                    <label class="form-check-label" for="Shipping-2">Flat rate: $15.00</label>
+                                                    <label class="form-check-label" for="Shipping-2">Flat rate: Rp 4.000,00</label>
                                                 </div>
                                                 <div class="form-check text-start">
                                                     <input type="checkbox" class="form-check-input bg-primary border-0" id="Shipping-3" name="Shipping-1" value="Shipping">
-                                                    <label class="form-check-label" for="Shipping-3">Local Pickup: $8.00</label>
+                                                    <label class="form-check-label" for="Shipping-3">Local Pickup:Rp. 5.000,00</label>
                                                 </div>
                                             </td>
                                         </tr>
@@ -188,11 +179,9 @@ export default {
                                             <td class="py-5">
                                                 <p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>
                                             </td>
-                                            <td class="py-5"></td>
-                                            <td class="py-5"></td>
                                             <td class="py-5">
                                                 <div class="py-3 border-bottom border-top">
-                                                    <p class="mb-0 text-dark">$135.00</p>
+                                                    <p class="mb-0 text-dark">{{ convertCur(total) }}</p>
                                                 </div>
                                             </td>
                                         </tr>

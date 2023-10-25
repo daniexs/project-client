@@ -121,11 +121,14 @@ export const useCounterStore = defineStore('counter', {
         console.log(error)
       }
     },
-    async payment(){
+    async payment(total){
       try {
         const {data} = await axios({
           url: this.baseURL + '/midtrans/',
           method: 'post',
+          data: {
+            total
+          }
         })
         return data.token
       } catch (error) {
