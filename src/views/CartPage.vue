@@ -1,4 +1,17 @@
 <script>
+import {mapActions, mapState} from 'pinia'
+import { useCounterStore } from '../stores/counter';
+export default {
+    methods: {
+        ...mapActions(useCounterStore,['getCart'])
+    },
+    created(){
+        this.getCart()
+    },
+    computed: {
+        ...mapState(useCounterStore,['dataCart'])
+    }
+}
 </script>
 <template>
            <!-- Modal Search Start -->

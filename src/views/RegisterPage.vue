@@ -1,7 +1,22 @@
 <script>
 import {RouterLink} from 'vue-router'
+import {mapActions} from 'pinia'
+import { useCounterStore } from '../stores/counter';
 export default {
-    
+    data(){
+        return {
+            username: '',
+            email: '',
+            password: ''
+        }
+    },
+    methods: {
+        ...mapActions(useCounterStore,['register']),
+        async registerHadler(){
+            const data = {username: this.username, email: this.email, password: this.password}
+            await this.register(data)
+        }
+    }
 }
 </script>
 <template>
@@ -13,7 +28,7 @@ export default {
         <div class="signup-content">
             <div class="signup-form">
                 <h2 class="form-title">Sign up</h2>
-                <form method="POST" class="register-form" id="register-form">
+                <form method="POST" class="register-form" id="register-form" v-on:submit.prevent="registerHadler">
                     <div class="form-group">
                         <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                         <input type="text" name="name" id="name" placeholder="Your Name"/>

@@ -1,7 +1,18 @@
 <script>
 import CardHome from '../components/CardHome.vue'
+import {mapActions, mapState} from 'pinia'
+import { useCounterStore } from '../stores/counter';
 export default {
-    components: {CardHome}
+    components: {CardHome},
+    methods: {
+        ...mapActions(useCounterStore,['fetchProducts'])
+    },
+    computed: {
+        ...mapState(useCounterStore,['dataProducts'])
+    },
+    created(){
+        this.fetchProducts()
+    }
 }
 </script>
 <template>
@@ -210,11 +221,10 @@ export default {
                             </div>
                             <div class="col-lg-9">
                                 <div class="row g-4 justify-content-center">
-                                    <div class="col-md-6 col-lg-6 col-xl-4">
-                                        <CardHome/>
+                                    <div class="col-md-6 col-lg-6 col-xl-4" v-for="(el, index) in dataProducts">
+                                        <CardHome :data="el"/>
                                     </div>
-                                    
-                                    
+
                                     <div class="col-12">
                                         <div class="pagination d-flex justify-content-center mt-5">
                                             <a href="#" class="rounded">&laquo;</a>
@@ -235,3 +245,9 @@ export default {
             </div>
         </div>
 </template>
+<style>
+label {
+    position: relative;
+}
+
+</style>

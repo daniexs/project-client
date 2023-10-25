@@ -6,17 +6,17 @@ import {useCounterStore} from '../stores/counter'
 export default {
     components: {Navbar, CardHome},
     methods: {
-        ...mapActions(useCounterStore, ['fetchLeague']),
+        ...mapActions(useCounterStore, ['fetchProducts']),
     },
     computed: {
-        ...mapState(useCounterStore, ['dataLeague'])
+        ...mapState(useCounterStore, ['dataProducts'])
     },
     created(){
-        this.fetchLeague()
+        this.fetchProducts()
     },
     data(){
         return {
-            showNav: true
+            
         }
     }
 }
@@ -38,7 +38,6 @@ export default {
                 </div>
             </div>
         </div>
-
         <!-- Hero Start -->
         <div class="container-fluid py-5 mb-5 hero-header">
             <div class="container py-5">
@@ -77,8 +76,6 @@ export default {
             </div>
         </div>
         <!-- Hero End -->
-
-
         <!-- Featurs Section Start -->
         <div class="container-fluid featurs py-5">
             <div class="container py-5">
@@ -131,8 +128,6 @@ export default {
             </div>
         </div>
         <!-- Featurs Section End -->
-
-
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
@@ -176,8 +171,8 @@ export default {
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="row g-4">
-                                        <div class="col-md-6 col-lg-4 col-xl-3">
-                                            <CardHome/>
+                                        <div class="col-md-6 col-lg-4 col-xl-3" v-for="(el, index) in dataProducts" >
+                                            <CardHome :data="el" />
                                         </div>
                                     </div>
                                 </div>
@@ -364,8 +359,6 @@ export default {
             </div>
         </div>
         <!-- Fruits Shop End-->
-
-
         <!-- Featurs Start -->
         <div class="container-fluid service py-5">
             <div class="container py-5">
