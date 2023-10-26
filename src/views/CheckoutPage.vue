@@ -79,47 +79,10 @@ export default {
         <!-- Checkout Page Start -->
         <div class="container-fluid py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Billing details</h1>
                 <form action="#">
-                    <div class="row g-5">
-                        <div class="col-md-12 col-lg-6 col-xl-7">
-                            <div class="row">
-                                <div class="col-md-12 col-lg-6">
-                                    <div class="form-item w-100">
-                                        <label class="form-label my-2">First Name<sup>*</sup></label>
-                                        <input type="text" class="form-control mb-2">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-lg-6">
-                                    <div class="form-item w-100">
-                                        <label class="form-label my-2">Last Name<sup>*</sup></label>
-                                        <input type="text" class="form-control mb-2">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-item">
-                                <label class="form-label my-2">Address <sup>*</sup></label>
-                                <input type="text" class="form-control mb-2" placeholder="House Number Street Name">
-                            </div>
-                            <div class="form-item">
-                                <label class="form-label my-2">Country<sup>*</sup></label>
-                                <input type="text" class="form-control mb-2">
-                            </div>
-                            <div class="form-item">
-                                <label class="form-label my-2">Postcode/Zip<sup>*</sup></label>
-                                <input type="text" class="form-control mb-2">
-                            </div>
-                            <div class="form-item">
-                                <label class="form-label my-2">Mobile<sup>*</sup></label>
-                                <input type="tel" class="form-control mb-2">
-                            </div>
-                            <div class="form-item">
-                                <label class="form-label my-2">Email Address<sup>*</sup></label>
-                                <input type="email" class="form-control mb-2">
-                            </div>
-                            
-                        </div>
-                        <div class="col-md-12 col-lg-6 col-xl-5">
+                    <div class="row g-5 justify-content-center">
+                        
+                        <div class="col-md-12 col-lg-10 col-xl-8">
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>

@@ -57,11 +57,11 @@ export default {
                             <div class="col-lg-6">
                                 <div class="border rounded">
                                     <a href="#">
-                                        <img :src="dataProductsDetail.imgUrl" class="img-fluid rounded" alt="Image">
+                                        <img :src="dataProductsDetail.imgUrl[0]" class="img-fluid rounded" alt="Image">
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <h4 class="fw-bold mb-3">{{ dataProductsDetail.name }}</h4>
                                 <p class="mb-3">Category: {{ dataProductsDetail.category }}</p>
                                 <h5 class="fw mb-3">Price: {{ dataProductsDetail.price }}</h5>
@@ -75,6 +75,9 @@ export default {
                                 </div>
                                 <p class="mb-4"></p>
                                 <a href="#" v-on:click.prevent="addCart(dataProductsDetail.id)" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            </div>
+                            <div class="col-lg-3 gap-3" v-if="dataProductsDetail.imgUrl.length > 1"  style="display: flex;">
+                                <img v-for="(el, index) in dataProductsDetail.imgUrl.slice(1)" :key="index" :src="el" class="img-fluid rounded" style="height: 10rem;" alt="Image">
                             </div>
                             <div class="col-lg-12">
                                 <nav>

@@ -24,7 +24,12 @@ export const useCounterStore = defineStore('counter', {
           url,
           method: 'get'
         })
-        this.dataProducts = data
+        const dataFetch = data.map(el=>{
+          el.imgUrl = el.imgUrl.split(',')
+          console.log(el.imgUrl)
+          return el
+        })
+        this.dataProducts = dataFetch
       } catch (error) {
         console.log(error)
         Swal.fire({
@@ -136,10 +141,12 @@ export const useCounterStore = defineStore('counter', {
     },
     async productsDetail(id){
       try {
-        const {data} = await axios({
+        let {data} = await axios({
           url: this.baseURL + '/products/' + id,
           method: 'get'
         })
+        this.dataProductsDetail = data
+        data.imgUrl = data.imgUrl.split(',')
         this.dataProductsDetail = data
       } catch (error) {
         console.log(error)
@@ -209,8 +216,13 @@ export const useCounterStore = defineStore('counter', {
           data: formData,
           headers: {'Content-Type': 'multipart/from-data',access_token: localStorage.getItem('access_token')}
         })
-        this.imgUrl = data[0].location
-        console.log(this.imgUrl)
+        
+        const img = data.map(el=>{
+          return el.location
+        }).join(',')
+        console.log(img)
+        this.imgUrl = img
+        // console.log(this.imgUrl)
       } catch (error) {
         console.log(error)
         Swal.fire({
