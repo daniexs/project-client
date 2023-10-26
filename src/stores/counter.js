@@ -205,7 +205,7 @@ export const useCounterStore = defineStore('counter', {
           url: this.baseURL + '/upload/upload-multiple',
           method: 'post',
           data: formData,
-          headers: {'Content-Type': 'multipart/from-data'}
+          headers: {'Content-Type': 'multipart/from-data',access_token: localStorage.getItem('access_token')}
         })
         this.imgUrl = data[0].location
         console.log(this.imgUrl)
@@ -225,7 +225,8 @@ export const useCounterStore = defineStore('counter', {
           method: 'post',
           data: {
             total
-          }
+          },
+          headers: {access_token: localStorage.getItem('access_token')}
         })
         return data.token
       } catch (error) {
@@ -235,6 +236,32 @@ export const useCounterStore = defineStore('counter', {
           title: 'Oops...',
           text: error.response.data.message
         })
+      }
+    },
+    async delCart(id){
+      try {
+        const {data} = await axios({
+          url: this.baseURL + '/cart/'+id,
+          method: 'delete',
+          headers: {access_token: localStorage.getItem('access_token')}
+        })
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        Toast.fire({
+          icon: 'success',
+          title: 'Delete in successfully'
+        })
+      } catch (error) {
+        console.log(error)
       }
     }
   },
