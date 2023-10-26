@@ -85,10 +85,10 @@ export default {
                 <select class="form-select" v-model="category">
                     <option value="" disabled selected>--Select--</option>
                     <option value="Vegetables">Vegetables</option>
-                    <option value="Fruit">Fruit</option>
+                    <option value="Fruits">Fruits</option>
                     <option value="Bread">Bread</option>
                     <option value="Meat">Meat</option>
-                    <option value="Others">Others</option>
+                    <option value="Other">Other</option>
                 </select>
             </div>
             <div class="input-group w-100 mb-3">

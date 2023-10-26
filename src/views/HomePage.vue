@@ -12,7 +12,7 @@ export default {
         ...mapState(useCounterStore, ['dataProducts'])
     },
     created(){
-        this.fetchProducts()
+        this.fetchProducts(1,'all')
     },
     data(){
         return {

@@ -9,15 +9,28 @@ export const useCounterStore = defineStore('counter', {
     imgUrl: ''
   }),
   actions: {
-    async fetchProducts(){
+    async fetchProducts(page,filter,name){
+      let url = this.baseURL + '/products'
+      url += ('?page=' + page)
+      if(filter !== 'all'){
+        url += ('&filter='+ filter)
+      }
+      if(name){
+        url += ('&name='+ name)
+      }
       try {
         const {data} = await axios({
-          url: this.baseURL + '/products/',
+          url,
           method: 'get'
         })
         this.dataProducts = data
       } catch (error) {
         console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.message
+        })
       }
     },
     async login(email,password){
@@ -29,8 +42,29 @@ export const useCounterStore = defineStore('counter', {
         })
         localStorage.setItem('access_token', data.access_token)
         this.$router.push('/')
+        await this.getCart()
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        Toast.fire({
+          icon: 'success',
+          title: 'Signed in successfully'
+        })
       } catch (error) {
         console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.message
+        })
       }
     },
     async register(value){
@@ -41,8 +75,23 @@ export const useCounterStore = defineStore('counter', {
           data: value
         })
         this.$router.push('/login')
+        Swal.fire({
+          title: `${data.email} done create, you can log in`,
+          showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+          }
+        })
+        this.$router.push('/login')
       } catch (error) {
         console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.message
+        })
       }
     },
     async addProducts(value){
@@ -58,6 +107,11 @@ export const useCounterStore = defineStore('counter', {
         this.imgUrl = ''
       } catch (error) {
         console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.message
+        })
       }
     },
     async editProducts(id){
@@ -71,6 +125,11 @@ export const useCounterStore = defineStore('counter', {
         console.log(data)
       } catch (error) {
         console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.message
+        })
       }
     },
     async productsDetail(id){
@@ -82,6 +141,11 @@ export const useCounterStore = defineStore('counter', {
         this.dataProductsDetail = data
       } catch (error) {
         console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.message
+        })
       }
     },
     async getCart(){
@@ -94,6 +158,11 @@ export const useCounterStore = defineStore('counter', {
         this.dataCart = data
       } catch (error) {
         console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.message
+        })
       }
     },
     async addCart(id){
@@ -105,9 +174,29 @@ export const useCounterStore = defineStore('counter', {
           headers: {access_token: localStorage.getItem('access_token')}
         })
         console.log(data)
-        //this.dataCart = data
+        await this.getCart()
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        Toast.fire({
+          icon: 'success',
+          title: 'Add Wihslist in successfully'
+        })
       } catch (error) {
         console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.message
+        })
       }
     },
     async uploadFile(formData){
@@ -122,6 +211,11 @@ export const useCounterStore = defineStore('counter', {
         console.log(this.imgUrl)
       } catch (error) {
         console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.message
+        })
       }
     },
     async payment(total){
@@ -136,6 +230,11 @@ export const useCounterStore = defineStore('counter', {
         return data.token
       } catch (error) {
         console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.message
+        })
       }
     }
   },

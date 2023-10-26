@@ -29,7 +29,12 @@ const router = createRouter({
     {
       path: '/cart',
       name: 'cart',
-      component: CartPage
+      component: CartPage,
+      beforeEnter: (to,from) => {
+        if(!localStorage.access_token){
+          return {name: 'login'}
+        }
+      }
     },
     {
       path: '/register',
@@ -53,6 +58,16 @@ const router = createRouter({
     },
     
   ]
+})
+
+router.beforeEach(async (to, from) => {
+  if (
+    // make sure the user is authenticated
+    localStorage.access_token && (to.name == 'login' || to.name == 'register')
+  ) {
+    // redirect the user to the login page
+    return { name: 'home' }
+  }
 })
 
 export default router
