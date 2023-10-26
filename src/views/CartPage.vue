@@ -80,7 +80,6 @@ export default {
                             <th scope="col">Products</th>
                             <th scope="col">Name</th>
                             <th scope="col">Price</th>
-                            
                             <th scope="col">Handle</th>
                           </tr>
                         </thead>
