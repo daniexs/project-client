@@ -49,12 +49,22 @@ const router = createRouter({
     {
       path: '/add',
       name: 'add',
-      component: FormPage
+      component: FormPage,
+      beforeEnter: (to,from) => {
+        if(!localStorage.access_token){
+          return {name: 'login'}
+        }
+      }
     },
     {
       path: '/checkout',
       name: 'checkout',
-      component: CheckoutPage
+      component: CheckoutPage,
+      beforeEnter: (to,from) => {
+        if(!localStorage.access_token){
+          return {name: 'login'}
+        }
+      }
     },
     
   ]

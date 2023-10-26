@@ -1,6 +1,6 @@
 <script>
 import {RouterLink} from 'vue-router'
-import {mapActions, mapState} from 'pinia'
+import {mapActions, mapState, mapWritableState} from 'pinia'
 import { useCounterStore } from '../stores/counter'
 export default {
     data(){
@@ -9,10 +9,17 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useCounterStore,['getCart'])
+        ...mapActions(useCounterStore,['getCart']),
+        logoutHandler(){
+            this.isAuthenticated = false
+            localStorage.removeItem('access_token')
+            this.dataCart = []
+            this.$router.push('/')
+        }
     },
     computed:{
-        ...mapState(useCounterStore,['dataCart'])
+        ...mapState(useCounterStore,['dataCart']),
+        ...mapWritableState(useCounterStore,['isAuthenticated'])
     },
     created(){
         if(localStorage.access_token){
@@ -49,17 +56,7 @@ export default {
                         <div class="navbar-nav mx-auto">
                             <RouterLink to="/" class="nav-item nav-link active">Home</RouterLink>
                             <RouterLink to="/shop" class="nav-item nav-link">Shop</RouterLink>
-                            <RouterLink to="/detail/1" class="nav-item nav-link">Shop Detail</RouterLink>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Cart</a>
-                                    <a href="chackout.html" class="dropdown-item">Chackout</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
-                                </div>
-                            </div>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                            
                         </div>
                         <div class="d-flex m-3 me-4">
                             <RouterLink to="/cart" class="position-relative me-4 my-auto">
@@ -71,9 +68,9 @@ export default {
                                     <i class="fas fa-user fa-2x"></i>
                                 </a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <RouterLink to="/login" class="dropdown-item">Login</RouterLink>
+                                    <RouterLink v-if="isAuthenticated == false" to="/login" class="dropdown-item">Login</RouterLink>
                                     <RouterLink to="/add" class="dropdown-item">Add Product</RouterLink>
-                                    <RouterLink to="/register" class="dropdown-item">Logout</RouterLink>
+                                    <a href="" v-if="isAuthenticated == true" v-on:click.prevent="logoutHandler" class="dropdown-item">Logout</a>
                                 </div>
                             </div>
                         </div>

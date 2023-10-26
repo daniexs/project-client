@@ -6,7 +6,8 @@ export const useCounterStore = defineStore('counter', {
     dataProducts: [],
     dataProductsDetail: {},
     dataCart : [],
-    imgUrl: ''
+    imgUrl: '',
+    isAuthenticated: localStorage.access_token ? true : false
   }),
   actions: {
     async fetchProducts(page,filter,name){
@@ -41,6 +42,7 @@ export const useCounterStore = defineStore('counter', {
           data: {email,password}
         })
         localStorage.setItem('access_token', data.access_token)
+        this.isAuthenticated = true
         this.$router.push('/')
         await this.getCart()
         const Toast = Swal.mixin({
@@ -262,6 +264,11 @@ export const useCounterStore = defineStore('counter', {
         })
       } catch (error) {
         console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.message
+        })
       }
     }
   },
